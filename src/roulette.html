@@ -1,0 +1,64 @@
+<html>
+    <body>
+        <script>
+
+            const roulTrigger = document.createElement('button');
+            roulTrigger.textContent = 'Spin Roulette';
+            roulTrigger.addEventListener('click',()=>{roulDisplay(roulSpin())});
+            document.body.appendChild(roulTrigger);
+            let dataHeader = [["Number","Color","Pairity","Pass/Fail"]];
+            dataDisplay(dataHeader);
+
+            function dataDisplay(data) {
+                let tbl = document.createElement('table');
+                for (let i=0; i<data.length; ++i) {
+                    let row = data[i];
+                    let tr = document.createElement('tr');
+                    tbl.appendChild(tr);
+                    for (let j=0; j<row.length; ++j) {
+                        let td = document.createElement('td');
+                        tr.appendChild(td);
+                        let txt = document.createTextNode(row[j]);
+                        td.appendChild(txt);
+                    }
+                }
+                document.body.appendChild(tbl);
+            }
+
+            function roulSpin() {
+                let roulWheel = ['0','34','10','21','28','4','18','9','27','22','12','3','17','20','11','33','2','10','32','00','15','8','25','1','31','20','14','30','7','24','29','35','6','13','23','19','5','36'];
+                let roulIndex = Math.floor(Math.random()*roulWheel.length);
+                let roulNum = roulWheel[roulIndex];
+                let roulColor = null;
+                if (roulIndex%2 == 0) {
+                    roulColor = "Rouge";
+                }
+                else {
+                    roulColor = "Noir";
+                }
+                let roulPairity = null;
+                if (roulNum%2 == 0) {
+                    roulPairity = "Pair";
+                }
+                else {
+                    roulPairity = "Impair";
+                }
+                let roulPassFail = null;
+                if (roulNum == '0' || (roulNum != '00' && parseInt(roulNum) <= 18)) {
+                    roulPassFail = "Manque";
+                }
+                else {
+                    roulPassFail = "Passe";
+                }
+                roulInfo = [roulNum,roulColor,roulPairity,roulPassFail];
+                return roulInfo;
+            }
+
+            function roulDisplay(roulInfo) {
+                dataHeader.push(roulInfo);
+                dataDisplay(dataHeader);
+            }
+
+        </script>
+    </body>
+</html>
